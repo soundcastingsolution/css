@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Merged UI System</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Common Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Merged UI Elements Collection</h1>
+
+ <div class="glass-panel">
+<h2>Bulk Validation</h2>
+
+</div>
+
+
+
+        <!-- Dropdown to select form element -->
+            <label for="formSelector" class="form-label">Select Form:</label>
+            <select id="formSelector" class="form-select mb-4">
+                <option value="formElement">Form Element</option>
+                <option value="formElement1">Form Element 1</option>
+            </select>
+
+
+        <!-- Form Element 1 -->
+        <div id="formElement" class="glass-panel">
+            <h3>Form Elements</h3>
+            <form id="form1">
+                <input type="text" class="form-control mb-3" placeholder="Text Input">
+                <textarea class="form-control mb-3" rows="3" placeholder="Text Area"></textarea>
+                <div class="row g-2 mb-3">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="First Column">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Second Column">
+                    </div>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="terms">
+                    <label for="terms" class="form-check-label">Accept Terms & Conditions</label>
+                </div>
+                <select class="form-select mb-3">
+                    <option selected>Dropdown List</option>
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                </select>
+                <input type="search" class="form-control mb-3" placeholder="Search Bar">
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
+                <button type="button" id="stopButton" class="btn btn-danger w-100 hidden mt-3">Stop</button>
+                <div id="loader" class="spinner-3d hidden"></div>
+                <div class="progress-3d hidden" id="progressBar">
+                    <div class="progress-3d-bar" id="progressBarFill"></div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Form Element 2 -->
+        <div id="formElement1" class="glass-panel hidden">
+            <h3>Form Element 1</h3>
+            <form id="form2">
+                <input type="email" class="form-control mb-3" placeholder="Email Input">
+                <input type="password" class="form-control mb-3" placeholder="Password Input">
+                <textarea class="form-control mb-3" rows="3" placeholder="Additional Comments"></textarea>
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="subscribe">
+                    <label for="subscribe" class="form-check-label">Subscribe to newsletter</label>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Register</button>
+                <button type="button" id="stopButton2" class="btn btn-danger w-100 hidden mt-3">Stop</button>
+                <div id="loader2" class="spinner-3d hidden"></div>
+                <div class="progress-3d hidden" id="progressBar2">
+                    <div class="progress-3d-bar" id="progressBarFill2"></div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Response Area -->
+        <div class="glass-panel mt-4">
+            <h3>Response Area</h3>
+            <div id="responseContent" class="glass-panel">Response will appear here...</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5">&copy; 2025 Sound Casting Solutions</footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Form Selector Script -->
+    <script>
+        document.getElementById('formSelector').addEventListener('change', function() {
+            const selectedForm = this.value;
+            document.getElementById('formElement').classList.add('hidden');
+            document.getElementById('formElement1').classList.add('hidden');
+            document.getElementById(selectedForm).classList.remove('hidden');
+        });
+
+        function handleFormSubmission(formId, loaderId, stopBtnId, progressBarId, progressBarFillId) {
+            const form = document.getElementById(formId);
+            const loader = document.getElementById(loaderId);
+            const stopButton = document.getElementById(stopBtnId);
+            const progressBar = document.getElementById(progressBarId);
+            const progressBarFill = document.getElementById(progressBarFillId);
+            const responseContent = document.getElementById('responseContent');
+
+            let isProcessing = false;
+            let interval;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                loader.classList.remove('hidden');
+                stopButton.classList.remove('hidden');
+                progressBar.classList.remove('hidden');
+                form.querySelector('button[type="submit"]').classList.add('hidden');
+                isProcessing = true;
+                let progress = 0;
+
+                interval = setInterval(() => {
+                    if (isProcessing) {
+                        progress += 10;
+                        progressBarFill.style.width = progress + '%';
+                        responseContent.innerHTML = `<p>Processing... ${new Date().toLocaleTimeString()}</p>`;
+                        if (progress >= 100) {
+                            clearInterval(interval);
+                            loader.classList.add('hidden');
+                            stopButton.classList.add('hidden');
+                            form.querySelector('button[type="submit"]').classList.remove('hidden');
+                            responseContent.innerHTML = '<p>Processing completed.</p>';
+                        }
+                    }
+                }, 1000);
+            });
+
+            stopButton.addEventListener('click', function() {
+                isProcessing = false;
+                clearInterval(interval);
+                loader.classList.add('hidden');
+                stopButton.classList.add('hidden');
+                progressBar.classList.add('hidden');
+                form.querySelector('button[type="submit"]').classList.remove('hidden');
+                progressBarFill.style.width = '0%';
+                responseContent.innerHTML = '<p>Processing stopped.</p>';
+            });
+        }
+
+        handleFormSubmission('form1', 'loader', 'stopButton', 'progressBar', 'progressBarFill');
+        handleFormSubmission('form2', 'loader2', 'stopButton2', 'progressBar2', 'progressBarFill2');
+    </script>
+</body>
+</html>

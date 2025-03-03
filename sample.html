@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Multi-Theme Design Template Guide</title>
+  <style>
+    /* Default Theme Variables */
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --border-color: rgba(255, 255, 255, 0.2);
+      --accent-blue: #0078d4;
+      --deep-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    /* Base Styles */
+    body {
+      font-family: 'Segoe UI', system-ui;
+      background: linear-gradient(135deg, #1a3657 0%, #0e1a2a 100%);
+      color: white;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      transition: all 0.3s;
+    }
+    h1, h2, h3 {
+      text-align: center;
+    }
+    /* Glass Panel Container */
+    .glass-panel {
+      background: var(--glass-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: var(--deep-shadow);
+      padding: 20px;
+    }
+    /* ---------- Theme Overrides ---------- */
+    /* Light Theme */
+    body.theme-light {
+      --glass-bg: rgba(255, 255, 255, 0.8);
+      --border-color: #aaa;
+      --accent-blue: #0078d4;
+      --deep-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, #f0f0f0, #ffffff);
+      color: #333;
+    }
+    /* Red Theme */
+    body.theme-red {
+      --glass-bg: rgba(255, 0, 0, 0.1);
+      --border-color: rgba(255, 0, 0, 0.3);
+      --accent-blue: #ff5555;
+      --deep-shadow: 0 8px 32px rgba(255, 0, 0, 0.4);
+      background: linear-gradient(135deg, #4b0000, #2a0000);
+      color: white;
+    }
+    /* ---------- 3D Loading Components ---------- */
+    .progress-3d {
+      width: 100%;
+      height: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+      margin-bottom: 15px;
+    }
+    .progress-3d::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-blue) 0%, #00ccff 50%, var(--accent-blue) 100%);
+      background-size: 200% 100%;
+      animation: progressFlow 2s linear infinite;
+      border-radius: 8px;
+    }
+    .progress-3d::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(transparent 50%, rgba(0,0,0,0.1) 100%);
+      border-radius: 8px;
+    }
+    @keyframes progressFlow {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .spinner-3d {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      position: relative;
+      animation: spin 1.5s linear infinite;
+      margin: 20px auto;
+    }
+    .spinner-3d::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent 40%, var(--accent-blue) 50%, transparent 60%);
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(0,120,212,0.4), inset 0 0 10px rgba(255,255,255,0.2);
+    }
+    .spinner-3d::after {
+      content: '';
+      position: absolute;
+      width: 70%;
+      height: 70%;
+      top: 15%;
+      left: 15%;
+      background: #0e1a2a;
+      border-radius: 50%;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .pulse-loader {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    .pulse-dot {
+      width: 20px;
+      height: 20px;
+      background: var(--accent-blue);
+      border-radius: 50%;
+      animation: pulse 1.4s infinite ease-in-out;
+      box-shadow: 0 0 10px rgba(0,120,212,0.4);
+    }
+    .pulse-dot:nth-child(2) { animation-delay: 0.2s; }
+    .pulse-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes pulse {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; }
+      40% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 20px rgba(0,120,212,0.6); }
+    }
+    .skeleton-card {
+      width: 100%;
+      height: 120px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      margin-bottom: 15px;
+    }
+    .skeleton-card::after {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+      animation: skeletonShine 1.5s infinite;
+    }
+    @keyframes skeletonShine {
+      0% { left: -50%; }
+      100% { left: 150%; }
+    }
+    /* ---------- Form Elements ---------- */
+    .custom-button {
+      background: var(--accent-blue);
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-bottom: 10px;
+    }
+    .custom-button:hover { background: #005a9e; }
+    .custom-input,
+    .custom-textarea,
+    .custom-dropdown {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      color: inherit;
+      margin-bottom: 10px;
+    }
+    .custom-input:focus,
+    .custom-textarea:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 5px var(--accent-blue);
+    }
+    .custom-textarea { resize: vertical; min-height: 80px; }
+    .two-column { display: flex; gap: 10px; margin-bottom: 10px; }
+    .two-column .custom-input { flex: 1; }
+    .custom-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    .custom-checkbox input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      appearance: none;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.1);
+      position: relative;
+    }
+    .custom-checkbox input[type="checkbox"]:checked {
+      background: var(--accent-blue);
+    }
+    .custom-checkbox input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 0;
+      left: 4px;
+      color: white;
+      font-size: 16px;
+    }
+    /* Updated Dropdown List with Improved Contrast */
+    .custom-dropdown {
+      background: rgba(0,0,0,0.3);
+      color: white;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D'http://www.w3.org/2000/svg'%20width%3D'10'%20height%3D'10'%3E%3Cpolygon%20points%3D'0,0%205,5%200,10'%20fill%3D'white'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 10px;
+    }
+    .search-bar { display: flex; gap: 5px; margin-bottom: 10px; }
+    .search-bar input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      color: inherit;
+    }
+    .search-bar button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background: var(--accent-blue);
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .search-bar button:hover { background: #005a9e; }
+    /* ---------- Menus ---------- */
+    .vertical-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .vertical-menu li {
+      padding: 10px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .vertical-menu li:hover { background: var(--accent-blue); }
+    .horizontal-menu {
+      display: flex;
+      gap: 15px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .horizontal-menu li {
+      padding: 10px 15px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .horizontal-menu li:hover { background: var(--accent-blue); }
+    /* ---------- HTTP Response Simulation ---------- */
+    .http-response {
+      background: rgba(0,0,0,0.2);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px;
+      min-height: 50px;
+      font-family: monospace;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+    /* ---------- Scrollable Container ---------- */
+    .scroll-container {
+      max-height: 150px;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      margin-bottom: 10px;
+    }
+    /* ---------- Custom Mouse Pointer (Demo) ---------- */
+    .custom-pointer {
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      display: inline-block;
+      cursor: crosshair;
+      margin-top: 10px;
+    }
+    /* ---------- Loading Progress Bar Simulation ---------- */
+    .loading-progress {
+      width: 100%;
+      height: 15px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+      position: relative;
+      margin-top: 10px;
+    }
+    .loading-progress-inner {
+      height: 100%;
+      width: 0;
+      background: var(--accent-blue);
+      transition: width 0.4s ease;
+    }
+    /* ---------- Additional Components ---------- */
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      gap: 5px;
+      padding: 0;
+      margin: 15px 0;
+    }
+    .pagination li {
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .pagination li.active, .pagination li:hover {
+      background: var(--accent-blue);
+    }
+    /* Expanding Search Result (Accordion) */
+    .accordion {
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .accordion-item {
+      border-bottom: 1px solid var(--border-color);
+    }
+    .accordion-header {
+      padding: 10px;
+      background: rgba(255,255,255,0.1);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .accordion-header:hover {
+      background: var(--accent-blue);
+    }
+    .accordion-content {
+      padding: 10px;
+      display: none;
+      background: rgba(0,0,0,0.1);
+    }
+    .accordion-content.expanded {
+      display: block;
+    }
+    /* Data Table with Filtering (Rows per Page) */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+    }
+    .data-table th, .data-table td {
+      border: 1px solid var(--border-color);
+      padding: 8px;
+      text-align: left;
+    }
+    .data-table th {
+      background: rgba(255,255,255,0.1);
+    }
+    /* Font Size & Line Spacing Controls */
+    .text-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      justify-content: center;
+    }
+    .text-controls button {
+      padding: 5px 10px;
+      background: var(--accent-blue);
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .text-controls button:hover {
+      background: #005a9e;
+    }
+    .text-demo {
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      margin-bottom: 10px;
+    }
+    /* ---------- Media Queries ---------- */
+    @media (max-width: 768px) {
+      .two-column { flex-direction: column; }
+      .horizontal-menu { flex-direction: column; }
+      .spinner-3d { width: 40px; height: 40px; }
+      .pulse-dot { width: 16px; height: 16px; }
+    }
+  </style>
+</head>
+<body class="theme-default">
+  <h1>Multi-Theme Design Template Guide</h1>
+  
+  <!-- Theme Switcher -->
+  <div class="glass-panel">
+    <h2>Theme Switcher</h2>
+    <select id="theme-switcher">
+      <option value="theme-default">Default</option>
+      <option value="theme-light">Light</option>
+      <option value="theme-red">Red</option>
+    </select>
+  </div>
+  
+  <!-- Section 1: 3D Loading Components -->
+  <div class="glass-panel">
+    <h2>3D Loading Components</h2>
+    <h3>3D Progress Bar</h3>
+    <div class="progress-3d" style="height: 15px; margin: 15px 0;"></div>
+    <h3>3D Spinning Loader</h3>
+    <div class="spinner-3d"></div>
+    <h3>Pulsing 3D Dots Loader</h3>
+    <div class="pulse-loader">
+      <div class="pulse-dot"></div>
+      <div class="pulse-dot"></div>
+      <div class="pulse-dot"></div>
+    </div>
+    <h3>3D Skeleton Loading</h3>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card" style="margin-top: 15px; height: 80px;"></div>
+  </div>
+  
+  <!-- Section 2: Form Elements -->
+  <div class="glass-panel">
+    <h2>Form Elements</h2>
+    <h3>Text Input</h3>
+    <input type="text" class="custom-input" placeholder="Enter text here" />
+    <h3>Text Area</h3>
+    <textarea class="custom-textarea" placeholder="Enter detailed text here"></textarea>
+    <h3>Two Column Input Fields</h3>
+    <div class="two-column">
+      <input type="text" class="custom-input" placeholder="First Name" />
+      <input type="text" class="custom-input" placeholder="Last Name" />
+    </div>
+    <h3>Checkbox</h3>
+    <label class="custom-checkbox">
+      <input type="checkbox" />
+      Accept Terms &amp; Conditions
+    </label>
+    <h3>Dropdown List</h3>
+    <select class="custom-dropdown">
+      <option value="">Select an option</option>
+      <option value="1">Option One</option>
+      <option value="2">Option Two</option>
+      <option value="3">Option Three</option>
+    </select>
+    <h3>Search Bar</h3>
+    <div class="search-bar">
+      <input type="text" placeholder="Search..." />
+      <button class="custom-button">Go</button>
+    </div>
+    <h3>Button</h3>
+    <button class="custom-button">Submit Form</button>
+  </div>
+  
+  <!-- Section 3: Menus -->
+  <div class="glass-panel">
+    <h2>Menus</h2>
+    <h3>Vertical Menu</h3>
+    <ul class="vertical-menu">
+      <li>Home</li>
+      <li>About</li>
+      <li>Services</li>
+      <li>Contact</li>
+    </ul>
+    <br>
+    <h3>Horizontal Menu</h3>
+    <ul class="horizontal-menu">
+      <li>Dashboard</li>
+      <li>Profile</li>
+      <li>Settings</li>
+      <li>Logout</li>
+    </ul>
+  </div>
+  
+  <!-- Section 4: HTTP Response Simulation -->
+  <div class="glass-panel">
+    <h2>HTTP Response Simulation</h2>
+    <button class="custom-button" id="fetch-btn">Fetch Data</button>
+    <div class="http-response" id="http-response">Response will appear here...</div>
+  </div>
+  
+  <!-- Section 5: Scrollable Content & Custom Mouse Pointer -->
+  <div class="glass-panel">
+    <h2>Scrollable Content &amp; Custom Pointer</h2>
+    <h3>Scrollable Content</h3>
+    <div class="scroll-container">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula, metus nec cursus efficitur, nibh tortor elementum magna, a sollicitudin justo sapien a augue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi. Sed vel dui eget leo vestibulum auctor.
+      </p>
+      <p>
+        Morbi gravida enim in justo volutpat, at congue leo luctus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur blandit nibh non turpis convallis, a tincidunt nunc pretium. Nam in nisi eros.
+      </p>
+    </div>
+    <h3>Custom Mouse Pointer</h3>
+    <div class="custom-pointer">Hover me for a custom pointer!</div>
+  </div>
+  
+  <!-- Section 6: Loading Progress Bar Simulation -->
+  <div class="glass-panel">
+    <h2>Loading Progress Bar Simulation</h2>
+    <div class="loading-progress">
+      <div class="loading-progress-inner" id="loading-progress-inner"></div>
+    </div>
+    <button class="custom-button" id="start-loading">Start Loading</button>
+  </div>
+  
+  <!-- Section 7: Additional Components -->
+  <div class="glass-panel">
+    <h2>Additional Components</h2>
+    
+    <!-- Pagination -->
+    <h3>Pagination</h3>
+    <ul class="pagination" id="pagination">
+      <li data-page="prev">Prev</li>
+      <li data-page="1" class="active">1</li>
+      <li data-page="2">2</li>
+      <li data-page="3">3</li>
+      <li data-page="next">Next</li>
+    </ul>
+    
+    <!-- Expanding Search Result (Accordion) -->
+    <h3>Expanding Search Results</h3>
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header">Search Result 1</div>
+        <div class="accordion-content">Detailed information for search result 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">Search Result 2</div>
+        <div class="accordion-content">Detailed information for search result 2. Pellentesque habitant morbi tristique senectus et netus.</div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">Search Result 3</div>
+        <div class="accordion-content">Detailed information for search result 3. Morbi gravida enim in justo volutpat, at congue leo luctus.</div>
+      </div>
+    </div>
+    
+    <!-- Data Table Filtering (Rows per Page) -->
+    <h3>Data Table Filtering (Rows per Page)</h3>
+    <label for="rows-per-page">Rows per page:</label>
+    <select id="rows-per-page">
+      <option value="2">2</option>
+      <option value="4" selected>4</option>
+      <option value="6">6</option>
+    </select>
+    <table class="data-table" id="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Info</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Item 1</td><td>Info 1</td></tr>
+        <tr><td>2</td><td>Item 2</td><td>Info 2</td></tr>
+        <tr><td>3</td><td>Item 3</td><td>Info 3</td></tr>
+        <tr><td>4</td><td>Item 4</td><td>Info 4</td></tr>
+        <tr><td>5</td><td>Item 5</td><td>Info 5</td></tr>
+        <tr><td>6</td><td>Item 6</td><td>Info 6</td></tr>
+        <tr><td>7</td><td>Item 7</td><td>Info 7</td></tr>
+        <tr><td>8</td><td>Item 8</td><td>Info 8</td></tr>
+        <tr><td>9</td><td>Item 9</td><td>Info 9</td></tr>
+        <tr><td>10</td><td>Item 10</td><td>Info 10</td></tr>
+      </tbody>
+    </table>
+    
+    <!-- Font Size & Line Spacing Controls -->
+    <h3>Text Formatting Controls</h3>
+    <div class="text-controls">
+      <button id="increase-font">Increase Font</button>
+      <button id="decrease-font">Decrease Font</button>
+      <button id="increase-line">Increase Line Spacing</button>
+      <button id="decrease-line">Decrease Line Spacing</button>
+    </div>
+    <div class="text-demo" id="text-demo">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.
+    </div>
+  </div>
+  
+  <script>
+    // Theme Switcher
+    document.getElementById('theme-switcher').addEventListener('change', function() {
+      document.body.className = this.value;
+    });
+    
+    // HTTP Response Simulation
+    document.getElementById('fetch-btn').addEventListener('click', function() {
+      var responseDiv = document.getElementById('http-response');
+      responseDiv.textContent = 'Fetching data...';
+      setTimeout(function() {
+        responseDiv.textContent = 'HTTP 200 OK: { "message": "Data fetched successfully", "data": [1,2,3,4] }';
+      }, 1500);
+    });
+    
+    // Loading Progress Simulation
+    document.getElementById('start-loading').addEventListener('click', function() {
+      var progressInner = document.getElementById('loading-progress-inner');
+      progressInner.style.width = '0%';
+      var progress = 0;
+      var interval = setInterval(function() {
+        progress += 10;
+        progressInner.style.width = progress + '%';
+        if (progress >= 100) clearInterval(interval);
+      }, 300);
+    });
+    
+    // Accordion Functionality
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', function() {
+        var content = this.nextElementSibling;
+        content.classList.toggle('expanded');
+      });
+    });
+    
+    // Data Table Filtering (Rows per Page)
+    function updateTable() {
+      var limit = parseInt(document.getElementById('rows-per-page').value);
+      var rows = document.querySelectorAll('#data-table tbody tr');
+      rows.forEach((row, index) => {
+        row.style.display = (index < limit) ? '' : 'none';
+      });
+    }
+    document.getElementById('rows-per-page').addEventListener('change', updateTable);
+    updateTable(); // initial call
+    
+    // Font Size & Line Spacing Controls
+    var textDemo = document.getElementById('text-demo');
+    var fontSize = 16;
+    var lineSpacing = 1.5;
+    document.getElementById('increase-font').addEventListener('click', function() {
+      fontSize += 2;
+      textDemo.style.fontSize = fontSize + 'px';
+    });
+    document.getElementById('decrease-font').addEventListener('click', function() {
+      if (fontSize > 10) {
+        fontSize -= 2;
+        textDemo.style.fontSize = fontSize + 'px';
+      }
+    });
+    document.getElementById('increase-line').addEventListener('click', function() {
+      lineSpacing += 0.1;
+      textDemo.style.lineHeight = lineSpacing;
+    });
+    document.getElementById('decrease-line').addEventListener('click', function() {
+      if (lineSpacing > 1) {
+        lineSpacing -= 0.1;
+        textDemo.style.lineHeight = lineSpacing;
+      }
+    });
+  </script>
+</body>
+</html>
