@@ -1,0 +1,95 @@
+.custom-button {
+    background: var(--accent-blue);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-bottom: 10px;
+}
+.custom-button:hover {
+    background: #005a9e;
+}
+.custom-input,
+.custom-textarea,
+.custom-dropdown {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    color: inherit;
+    margin-bottom: 10px;
+}
+.custom-input:focus,
+.custom-textarea:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 5px var(--accent-blue);
+}
+.custom-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+.two-column {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.two-column .custom-input {
+    flex: 1;
+}
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.custom-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: rgba(255,255,255,0.1);
+    position: relative;
+}
+.custom-checkbox input[type="checkbox"]:checked {
+    background: var(--accent-blue);
+}
+.custom-checkbox input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 0;
+    left: 4px;
+    color: white;
+    font-size: 16px;
+}
+.search-bar {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+.search-bar input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    color: inherit;
+}
+.search-bar button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background: var(--accent-blue);
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.search-bar button:hover {
+    background: #005a9e;
+}
